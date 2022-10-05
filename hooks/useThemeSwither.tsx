@@ -1,7 +1,13 @@
 import { useEffect, useState } from 'react';
 
 function useThemeSwither() {
-  const [theme, setTheme] = useState<string>(localStorage.theme);
+  let localStorageTheme = '';
+  if (typeof window !== 'undefined') {
+    localStorageTheme = localStorage.theme;
+  }
+
+  const [theme, setTheme] = useState<string>(localStorageTheme);
+
   const colorTheme = theme === 'dark' ? 'light' : 'dark';
 
   useEffect(() => {
