@@ -92,7 +92,7 @@ const Home: NextPage = () => {
           </h1>
           <h2 className="font-normal text-2xl text-gray-500 dark:text-gray-200 my-4">
             A Selected collection of well desired portfolio websites to get
-            inspiration for building you next portfolio website.
+            inspiration for building you next portfolio .
           </h2>
         </div>
       </header>
