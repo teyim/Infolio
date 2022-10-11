@@ -8,6 +8,7 @@ import { RiShareBoxLine } from 'react-icons/ri';
 import { FiGithub } from 'react-icons/fi';
 import imageUrlBuilder from '@sanity/image-url';
 import { Portfolio } from '../types';
+
 function urlFor(source: string) {
   return imageUrlBuilder(sanityClient).image(source);
 }
@@ -90,7 +91,7 @@ const Home: NextPage<Portfolio> = ({ portfolios }) => {
               <Swither />
             </li>
             <li className="flex my-auto">
-              <a>
+              <a href="https://github.com/teyim">
                 <AiFillGithub className=" w-8 h-8 cursor-pointer " />
               </a>
             </li>
@@ -157,6 +158,15 @@ const Home: NextPage<Portfolio> = ({ portfolios }) => {
           ))}
         </div>
       </div>
+      <footer className="my-4">
+        <hr className="border " />
+        <h2 className="mt-5 text-center">
+          Created by{' '}
+          <a href="https://github.com/teyim" className="underline ">
+            Teyim Asobo
+          </a>
+        </h2>
+      </footer>
     </section>
   );
 };
