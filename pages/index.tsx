@@ -97,7 +97,7 @@ const Home: NextPage<Portfolio> = ({ portfolios }) => {
             </li>
           </ul>
         </nav>
-        <div className="my-4 mt-16 text-center w-3/5 mx-auto">
+        <div className="my-4 mt-16 text-center md:w-3/5 md:mx-auto px-4 md:px-0 ">
           <h1 className="font-lexend font-semibold text-5xl">
             Find <span className="text-indigo-600">Portfolio</span> Inspiration
           </h1>
@@ -127,7 +127,7 @@ const Home: NextPage<Portfolio> = ({ portfolios }) => {
                 <h1 className="font-bold text-2xl  dark:text-gray-200 ">
                   {portfolio.title}
                 </h1>
-                <div className="flex justify-between w-[20%] my-auto text-2xl text-indigo-600">
+                <div className="flex justify-between w-[25%] md:w-[20%] my-auto text-2xl text-indigo-600">
                   <a
                     href={portfolio.websiteLink}
                     target="_blank"
