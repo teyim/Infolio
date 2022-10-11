@@ -1,13 +1,23 @@
 import Swither from '@components/ui/switcher';
+import sanityClient from '../client';
 import type { NextPage } from 'next';
 import Link from 'next/link';
 import { AiFillGithub } from 'react-icons/ai';
+import Image from 'next/image';
+import { RiShareBoxLine } from 'react-icons/ri';
+import { FiGithub } from 'react-icons/fi';
+import imageUrlBuilder from '@sanity/image-url';
+import { Portfolio } from '../types';
+function urlFor(source: string) {
+  return imageUrlBuilder(sanityClient).image(source);
+}
 
-const Home: NextPage = () => {
+const Home: NextPage<Portfolio> = ({ portfolios }) => {
+  console.log(portfolios);
   return (
-    <section className="md:p-8 font-SG bg-gray-50 text-gray-600 text-xl h-screen transition duration-200 dark:bg-gray-600 dark:text-gray-200">
+    <section className="md:p-8 font-SG bg-white text-gray-700 text-xl  transition duration-200 dark:bg-gray-600 dark:text-gray-200 ">
       <header>
-        <nav className="flex justify-between md:w-1/2 w-4/5 p-4 mx-auto bg-gray-100 ring-2 ring-gray-200 rounded-lg align-baseline dark:bg-gray-700 dark:ring-gray-800  ">
+        <nav className="flex justify-between md:w-1/2 p-4 mx-auto  rounded-lg align-baseline  ">
           <Link href="/" passHref>
             <a className="flex  p-1">
               <div className="w-10 h-10 rounded-full ring-2 ring-gray-300  shadow-sm ">
@@ -75,7 +85,7 @@ const Home: NextPage = () => {
               </span>
             </a>
           </Link>
-          <ul className="my-auto flex justify-around w-1/5 p-1">
+          <ul className="my-auto flex justify-around w-1/4 p-1">
             <li className="flex my-auto">
               <Swither />
             </li>
@@ -88,16 +98,76 @@ const Home: NextPage = () => {
         </nav>
         <div className="my-4 mt-16 text-center w-3/5 mx-auto">
           <h1 className="font-lexend font-semibold text-5xl">
-            Find Portfolio Inspiration
+            Find <span className="text-indigo-600">Portfolio</span> Inspiration
           </h1>
           <h2 className="font-normal text-2xl text-gray-500 dark:text-gray-200 my-4">
-            A Selected collection of well desired portfolio websites to get
-            inspiration for building you next portfolio .
+            A Selected collection of well desired portfolio websites, to get
+            inspiration from when building your portfolio .
           </h2>
         </div>
       </header>
+      <div className="px-8 py-4 mt-8 ">
+        <div className="flex flex-wrap -mx-3 overflow-hidden justify-center content-center p-2">
+          {portfolios.map((portfolio) => (
+            <div
+              className="mx-3 my-4 p-3 w-full overflow-hidden lg:w-[30%] rounded-lg ring-1 ring-indigo-300 shadow-md"
+              key={portfolio._id}
+            >
+              <div className="rounded-md w-full h-[220px] relative ">
+                <Image
+                  src={urlFor(portfolio.siteImage.asset._ref).url()}
+                  alt="patten"
+                  layout="fill"
+                  objectFit="contain"
+                  className="rounded-md"
+                />
+              </div>
+              <div className="my-3 mx-3 flex justify-between">
+                <h1 className="font-bold text-2xl  dark:text-gray-200 ">
+                  {portfolio.title}
+                </h1>
+                <div className="flex justify-between w-[20%] my-auto text-2xl text-indigo-600">
+                  <a
+                    href={portfolio.websiteLink}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    <RiShareBoxLine />
+                  </a>
+                  <a
+                    href={portfolio.githubLink}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    <FiGithub />
+                  </a>
+                </div>
+              </div>
+              <div className="flex mx-3 flex-wrap">
+                {portfolio.tools.map((tool) => (
+                  <div
+                    className="px-2 py-1 m-2 bg-gray-200 ring-1 ring-gray-400 rounded-lg dark:bg-gray-600 md:text-sm"
+                    key={portfolio._id}
+                  >
+                    {tool}
+                  </div>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
     </section>
   );
 };
 
 export default Home;
+
+export async function getStaticProps() {
+  const portfolios: Array<object> = await sanityClient.fetch(
+    `*[_type=="portfolio"]`
+  );
+  return {
+    props: { portfolios: portfolios },
+  };
+}

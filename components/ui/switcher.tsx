@@ -19,6 +19,7 @@ function Swither() {
           checked={isDarkTheme}
           onChange={toggleTheme}
           size={25}
+          className="text-gray-600 "
         />
       </div>
     </>
