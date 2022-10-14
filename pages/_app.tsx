@@ -18,7 +18,7 @@ function MyApp({ Component, pageProps }: AppProps) {
             'A Selected collection of well desired portfolio websites, to get inspiration from when building your portfolio.',
           images: [
             {
-              url: '/og-image.png',
+              url: '/public/assets/appScreenShot.png',
               width: 800,
               height: 420,
               alt: 'Infolio',
